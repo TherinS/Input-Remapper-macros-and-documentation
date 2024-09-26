@@ -1,0 +1,26 @@
+I need to execute a specific macro on key_press
+and another completely different macro on key release.
+I do not want to hold a key while I'm pressing it.
+
+For instance, when I press Shift, I want to execute only once: Ctrl + Alt + A
+When I release Shift, I want to execute only once: Ctrl + F12
+
+The syntax for this could be:
+key( KEY_LEFTCTRL ).key( KEY_LEFT_ALT ).key( KEY_A ).on_release( key( KEY_LEFTCTRL ).key( KEY_F12 ) )
+just as a mock-up
+
+Or in more complex scenarios:
+When I press Shift I want to execute only once: key_up( KEY_F10 )
+When I release Shift I wan to execute only once: key_down( KEY_F10 )
+Effectively reversing the functionality of F10
+The syntax for this could be:
+key_up( KEY_F10 ).on_release( key_down( KEY_F10 ) )
+just as a mock-up
+
+So I press Shift, the macro key_up(F10) gets executed, I release Shift, the macro key_down(KEY_F10) gets executes
+
+
+
+reply from @sezanzeb
+
+key_up(KEY_F10).hold().key_down(KEY_F10)
