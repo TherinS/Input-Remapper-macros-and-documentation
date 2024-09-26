@@ -1,0 +1,10 @@
+I'd like to know if there is a feature to set different actions (or the same action twice) when a button is pressed and released.
+For example, I'd like to trigger XF86AudioMute on press (to mute) AND on release (to unmute). If this feature isn't there yet it 
+would be nice to have (if possible).
+
+Maybe the press action is held before the button is released. And on button release, a quick tap is triggered for the release action.
+
+
+Reply from @sezanzeb
+
+k(XF86AudioMute).h().k(XF86AudioMute)
