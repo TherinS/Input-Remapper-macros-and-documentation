@@ -1,0 +1,21 @@
+I need it to press 0, wait, then hold 5 for as long as I hold it, but nothing I have tried has worked.
+For example "hold_keys(0).w(10).hold_keys(5)" using the wait option just stalls the script at hold_keys(0) 
+  and keeps hold_keys(5) from working.
+
+
+  
+Reply:
+As-is, the macro does this for me:
+I hold down the remapped key and I get a line of "0" printed out untill I release the key. After releasing
+that key, there is a delay equal to the duration in the wait part, and then it prints the "5" once. It looks
+like this on a document:
+000000000(insert delay here)5
+
+What I think you are asking for is for a macro that enters something along the lines of:
+0(delay)55555555555 <-until key is released.
+
+Is that correct? In that case, try removing the first instance of "hold_keys" and just make it:
+key(0).w(10).hold_keys(5)
+
+I tested it using a blank text document to see what it was printing and using a much longer delay (2 seconds = 2000)
+so I could be sure the delay was working.
