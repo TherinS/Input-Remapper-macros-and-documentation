@@ -1,0 +1,99 @@
+===== Press key does one thing, hold does another
+        Tap and Hold binding for same button
+
+This may already be possible but I couldn't quite piece it together from the documentation.
+
+    On tap of a joystick button (e.g. press and release within 0.5s) pass the key through to the game as normal (so it gets triggered on release, not press)
+    On hold (e.g. button is held down longer than 0.5s) send a configured mapping
+
+I tried the following:
+
+set("pressed", 1).h(w(500).set("pressed",0)).ifeq("pressed", 1, k(x), k(y))
+
+The problem is, it always waits 500ms then presses Y. If h() exited immediately (and halted any current waits) on key release this should work.
+
+Thanks for the great tool!
+
+edit: I've found the source of the issue but I'm not really sure how to fix it:
+
+In macros.py line 290 there's this:
+
+ if isinstance(macro, _Macro):
+            # repeat the macro forever while the key is held down
+            async def task(handler):
+                while self.is_holding():
+                    # run the child macro completely to avoid
+                    # not-releasing any key
+                    await macro.run(handler)
+
+When the key is released, it runs whatever is inside h() so that always gets run. The problem is, I don't want it to be run. I need something like the following:
+
+    async def run(self, handler, endOnWait=True):
+        """Run the macro.
+        Parameters
+        ----------
+        handler : function
+            Will receive int type, code and value for an event to write
+        """
+        if self.running:
+            logger.error('Tried to run already running macro "%s"', self.code)
+            return
+        
+        self.keystroke_sleep_ms = self.mapping.get('macros.keystroke_sleep_ms')
+
+        self.running = True
+        for task in self.tasks:
+            # one could call tasks the compiled macros. it's lambda functions
+            # that receive the handler as an argument, so that they know
+            # where to send the event to.
+            coroutine = task(handler)
+            if asyncio.iscoroutine(coroutine):
+                if (endonWait && coroutine == wait) break;
+                else await coroutine
+
+        # done
+        self.running = False
+
+--
+how about being able to pass a number to hold
+
+set(long, 0).h(500).h(set(long, 1)).ifeq(long, 0, k(x), k(y))
+
+which could be an alternative to w(500) which stops when the key is released. I think this appears to be quite clean and it would avoid all delays
+
+Do you think h(500) could be ambiguous? Do you think it is better than w(500, while_held)? The latter one is definitely more descriptive I guess, but quite long. The length wouldn't matter if #109 was a thing, but I don't have the time anymore to do major features
+Please try set("pressed", 1).w(500).h(set("pressed", 0)).ifeq("pressed", 1, k(x), k(y))
+
+If the key is not held down anymore after 500ms, I think pressed will not be set to 0 with that. But it will definitely wait 500ms before writing x/y.
+You can call hold inside hold. That way the expression will continue to execute only if the key is still pressed.
+
+This will do X with no delay if fast press and release (<150ms) the button and do X with a bit of delay if release between 150ms and 500ms, but will do Y on release if hold key for >500ms:
+set(pressed, 1).w(150).h(w(350).h(set(pressed, 0).w(50))).ifeq(pressed, 1, k(x), k(y) )
+
+I like more this alternative, that will do Y right after 500ms, without the need to release button:
+set(pressed, 1).w(150).h(w(350).h(k(y).set(pressed, 0).h() )).ifeq(pressed, 1, k(x) )
+
+Setting a new hold inside another one at the end of a sub-expression can prevent the outside hold from repeating, so there is no need to set a new parameter to hold, just do like:
+h(k(y).set(pressed, 0).h())
+
+That way the k(y).set(pressed, 0) inside the hold will be triggered only once.
+If hold would get a parameter indicating the max repeats, it could look like this:
+
+set("pressed", 1).r(h(w(10), 1), 50).h(set("pressed", 0)).ifeq("pressed", 1, k(x), k(y))
+
+r(h(w(10), 1), 50) would wait 10 milliseconds once if the key is held down. This is repeated 50 times. If the key is not held down anymore after 20 repeats then h(...) will not run anymore, making r quickly cycle the remaining repeats. The result would be a total wait time of only 200ms.
+
+--
+
+You can call hold inside hold. That way the expression will continue to execute only if the key is still pressed.
+
+This will do X with no delay if fast press and release (<150ms) the button and do X with a bit of delay if release between 150ms and 500ms, but will do Y on release if hold key for >500ms:
+set(pressed, 1).w(150).h(w(350).h(set(pressed, 0).w(50))).ifeq(pressed, 1, k(x), k(y) )
+
+I like more this alternative, that will do Y right after 500ms, without the need to release button:
+set(pressed, 1).w(150).h(w(350).h(k(y).set(pressed, 0).h() )).ifeq(pressed, 1, k(x) )
+
+Setting a new hold inside another one at the end of a sub-expression can prevent the outside hold from repeating, so there is no need to set a new parameter to hold, just do like:
+h(k(y).set(pressed, 0).h())
+
+That way the k(y).set(pressed, 0) inside the hold will be triggered only once.
