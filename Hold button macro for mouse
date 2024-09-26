@@ -1,0 +1,44 @@
+===== To make a mouse button held down macro
+
+Your key would be stuck in autorepeat forever. It would be like keeping your
+ finger on your "a" key on your keyboard. If you disabled the release of your
+ left mouse button and tried to drag a file, it would never let go of the file.
+
+Yes you can do that with:
+
+    e(EV_KEY, BTN_LEFT, 1) 
+
+Change BTN_LEFT to KEY_A, or whatever key you are mapping this to,
+ but that basically completely breaks that key UNLESS you set another key to
+stop the macro from running: 
+
+Map:
+
+    e(EV_KEY, BTN_LEFT, 0) 
+
+to another key to cause key release.
+
+
+
+===== Another link =====
+In sudo evtest you can observe the injections by key-mapper. h(k(BTN_MOUSE))
+ seems to behave like h(BTN_MOUSE) on my computer as well, but when looking
+ into evtest you can see that it actually is injecting a lot of clicks. So
+ the environment seems to do some magic there, probably because the events
+ are injected so fast.
+
+ This is so you can repeat a button when you hold down another key, like when
+a action requires a click each time you want to perform the action.
+
+    say, spam(BTN_MOUSE,500)) with 500 being the interval
+
+try: h(k(BTN_MOUSE).w(500))
+
+
+
+===== Another sample =====
+How to macro a simple autofire output. Press & hold controller key mapped to
+ repeated press / release of output key.
+
+Answer for those searching for same is h(k(space))
+ (Assume spacebar is game fire button)
