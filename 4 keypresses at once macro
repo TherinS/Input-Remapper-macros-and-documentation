@@ -1,0 +1,13 @@
+How can I press 4 keys within a macro?
+
+This is what I'm trying to do: Alt+down wait Alt+Shift+Ctrl+4
+
+I tried this, but it won't let me mix macros and "+"
+modify(Alt_L, key(down)).wait(500)
+Alt_L+Shift_L+Control_L+4
+
+
+
+Response from @sezanzeb:
+
+hold_keys(Alt_L, Shift_L, Control_L, 4)
