@@ -1,0 +1,44 @@
+Move mouse cursor in a direction while key is held
+
+Do something like this to move the mouse down and to the right:
+
+hold(
+  event(EV_REL, REL_X, 1)
+  .event(EV_REL, REL_Y, 2)
+  .wait(10)
+)
+
+=====
+
+To move the mouse cursor and accelerate while moving:
+
+set(speed, 50)
+.hold(
+  event(EV_REL, REL_X, 1)
+  .event(EV_REL, REL_Y, 2)
+  .add(speed, -1)
+  .wait($speed)
+)
+
+This one did NOT work for me 2025-01-01
+
+set(speed, 0)
+.hold(
+  event(EV_REL, REL_X, $speed)
+  .event(EV_REL, REL_Y, $speed)
+  .add(speed, 1)
+  .wait(20)
+)
+-----
+
+New suggested solution but hasn't worked for me 2025-01-01
+
+parallel(
+  mouse(up, 10),
+  mouse(right, 5)
+)
+
+parallel(
+  mouse(down, 60),
+  hold_keys(BTN_LEFT)
+)
