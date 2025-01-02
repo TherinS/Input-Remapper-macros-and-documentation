@@ -1,0 +1,24 @@
+I want to hold the mouse button to fire in a game and at the same time scroll down the mouse to overcome the gun recoil.
+Doing "hold_keys(BTN_LEFT).mouse(down, 60)" causes the fire button to be held and the scroll to happen after releasing 
+the input button. How do I have it repeat both clicking the left mouse and scrolling down at the same time?
+
+Sezanzeb:
+The following will work:
+
+key_down(BTN_LEFT)
+.mouse(down, 60)
+.key_up(BTN_LEFT)
+
+which holds down BTN_LEFT while it moves the mouse down.
+
+=====
+
+You can also do:
+
+hold(
+  key(BTN_LEFT)
+  .event(EV_REL, REL_Y, 60)
+  .wait(100)
+)
+
+Which presses BTN_LEFT and moves down your mouse repeatedly every 100ms.
