@@ -11,7 +11,7 @@ hold(
 =====
 
 To move the mouse cursor and accelerate while moving:
-Replace $speed with a number:
+NOTE - Replace "$speed" with a number:
 
 set(speed, 50)
 .hold(
