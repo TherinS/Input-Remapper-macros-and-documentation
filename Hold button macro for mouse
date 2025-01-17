@@ -9,14 +9,17 @@ Yes you can do that with:
     e(EV_KEY, BTN_LEFT, 1) 
 
 Change BTN_LEFT to KEY_A, or whatever key you are mapping this to,
- but that basically completely breaks that key UNLESS you set another key to
-stop the macro from running: 
+but your key would be stuck in autorepeat forever. It would be like keeping 
+your finger on your "a" key on your keyboard. If you disabled the release 
+of your left mouse button and tried to drag a file, it would never let go of 
+the file.  That basically completely breaks that key UNLESS you set 
+another key to stop the macro from running: 
 
 Map:
 
     e(EV_KEY, BTN_LEFT, 0) 
 
-to another key to cause key release.
+to another key to trigger a key release.
 
 
 
