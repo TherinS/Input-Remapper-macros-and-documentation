@@ -1,0 +1,7 @@
+How can I map a key to perform one action on a short press vs a long press?
+Example: Pressing "o" will type an "o" on single press alone, while pressing and holding 
+for more than 250 milliseconds makes a "6" (or a macro).
+
+=====
+
+if_single(key(KEY_O), key(KEY_6), 250)
