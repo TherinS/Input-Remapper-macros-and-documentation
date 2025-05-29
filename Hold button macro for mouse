@@ -1,9 +1,5 @@
 ===== To make a mouse button held down macro
 
-Your key would be stuck in autorepeat forever. It would be like keeping your
- finger on your "a" key on your keyboard. If you disabled the release of your
- left mouse button and tried to drag a file, it would never let go of the file.
-
 Yes you can do that with:
 
     e(EV_KEY, BTN_LEFT, 1) 
