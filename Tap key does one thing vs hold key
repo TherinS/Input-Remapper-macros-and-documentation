@@ -5,3 +5,9 @@ for more than 250 milliseconds makes a "6" (or a macro).
 =====
 
 if_single(key(KEY_O), key(KEY_6), 250)
+
+-----
+This macro will type an 's' if the macro'd key is tapped, but if held, it performs a backspace AND hold the Left Shift.
+As is, it is handy to correct a lowercase letter to an upper one; modify as needed for your use case.
+
+key(s).if_tap( None, key(KEY_BACKSPACE).hold_keys(Shift_L))
