@@ -1,0 +1,4 @@
+Toggle macro key added October 19 2025, version 2.2.0
+
+To type an "a" forever until key is pressed again:
+  toggle(key(a))
