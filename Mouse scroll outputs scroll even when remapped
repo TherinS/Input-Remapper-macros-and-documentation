@@ -12,3 +12,7 @@ The simplest solution would be to add a mapping which disables the REL_WHEEL or 
 
 Wheel+side button -> your mapping
 Wheel HI RES+side button -> disable
+
+-----
+Also see this page:
+https://github.com/sezanzeb/input-remapper/issues/607
