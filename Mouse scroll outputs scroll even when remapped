@@ -1,0 +1,14 @@
+Mouse scroll wheel still outputs scroll event even after remapping
+=====
+
+When I want to remap Wheel Up event it adds the event on top of it instead of overwriting it, which sadly means that the scroll wheel cannot be suppressed!
+
+This is especially annoying because I have my media volume up/down set to scroll+side button and when I use the macro it scrolls content anyway. Any fixes to this?
+
+-----
+
+Mouse wheels often have 2 outputs: a normal and HI_RES.
+The simplest solution would be to add a mapping which disables the REL_WHEEL or REL_WEEHL_HI_RES.
+
+Wheel+side button -> your mapping
+Wheel HI RES+side button -> disable
