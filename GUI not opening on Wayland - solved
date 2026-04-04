@@ -1,0 +1,33 @@
+***GUI not opening on Wayland [SOLVED] #1261***
+
+This is just what I did that worked for me. This is on Debian Trixie using Swaywm.
+
+Installing:
+
+    wget https://github.com/sezanzeb/input-remapper/releases/download/2.2.0/input-remapper-2.2.0.deb
+    sudo apt install -f ./input-remapper-2.2.0.deb
+
+Opening GUI:
+3. sudo -E input-remapper-gtk
+
+Starting Daemon:
+6. sudo input-remapper-service
+7. sudo input-remapper-control --command autoload --device "Keyboard name " --preset "presetname"
+
+You can find the device name using:
+    sudo input-remapper-control --list-device
+and the preset name will be whatever you set when you made it in the GUI (or the name of the json file in ~/.config/input-remapper-2/presets/"Device name"/presetname.json)
+
+Automatically load preset on sign in:
+add at end of sway config
+    exec input-remapper-control --command autoload
+
+If the preset doesn't automatically load once you boot into your wm see if it's enabled using   systemctl is-enabled input-remapper. 
+If it's not enabled then you can enable it using sudo systemctl enable input-remapper. 
+If you're still having issues then (may god be with you) using:
+    sudo systemctl status input-remapper.service
+right after rebooting may be able to shed some light.
+
+This is a mishmash of many hours googling and just what got it working for me. The key step is running:
+     sudo -E input-remapper-gtk
+ as the program seemingly does not work unless the GUI is opened at least once.
