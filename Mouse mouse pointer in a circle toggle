@@ -1,0 +1,25 @@
+
+This will move the mouse in a small circle on screen until toggled off:
+
+toggle(
+	event(EV_REL, REL_X, -2).
+	wait(50).
+	event(EV_REL, REL_X, -1).
+	event(EV_REL, REL_Y, -1).
+	wait(50).
+	event(EV_REL, REL_Y, -2).
+	wait(50).
+	event(EV_REL, REL_Y, -1).
+	event(EV_REL, REL_X, 1).
+	wait(50).
+	event(EV_REL, REL_X, 2).
+	wait(50).
+	event(EV_REL, REL_X, 1).
+	event(EV_REL, REL_Y, 1).
+	wait(50).
+	event(EV_REL, REL_Y, 2).
+	wait(50).
+	event(EV_REL, REL_Y, 1).
+	event(EV_REL, REL_X, -1).
+	wait(50).
+)
