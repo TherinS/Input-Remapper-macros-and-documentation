@@ -1,4 +1,12 @@
-Solution presented by: HudsonSoda on Mar 29 2026
+Solution 1 presented by: shuja-u on Feb 10 2026
+
+    hold(repeat(1, key(BTN_LEFT).wait(45)))
+
+You can play with the wait between clicks. For some games 45 ms might be too low and they won't detect it, or you might want it faster. Usually if you go below 25 or 20 ms it doesn't work. You can also play with the number right after repeat for how many times you want it to click at a minimum every time you press the left click down.
+
+-----
+
+Solution 2 presented by: HudsonSoda on Mar 29 2026
 
 This is the output function I ended up using that worked. Choosing input "Mouse Button LEFT" with this function outputs an error stating "This would disable your click button" when you first apply the config. If you just click apply again, it will go through and still provide a spam/autoclick on the Left Mouse Button. This got annoying on the "Mouse Button LEFT" since I didn't always want an autoclick, so I used my dpi shift (Mouse 9) instead of my left mouse button to have a controlled hold-to-click bind. Tested and worked in multiple games and click tests.
 
@@ -14,4 +22,4 @@ Here's the function I used:
 The "1" is indicating a click down and "0" indicates a click release, so tweaking the values of the wait times would affect how fast the autoclick is. Hope this helps someone.
 
 =====
-Another option is to make this a toggle by simply replacing "hold" with "toggle", then the macro will run continuously untill you press the button again to stop the macro.
+An option is to make this a toggle by simply replacing "hold" with "toggle", then the macro will run continuously untill you press the button again to stop the macro.
