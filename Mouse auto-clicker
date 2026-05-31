@@ -1,0 +1,17 @@
+Solution presented by: HudsonSoda on Mar 29 2026
+
+This is the output function I ended up using that worked. Choosing input "Mouse Button LEFT" with this function outputs an error stating "This would disable your click button" when you first apply the config. If you just click apply again, it will go through and still provide a spam/autoclick on the Left Mouse Button. This got annoying on the "Mouse Button LEFT" since I didn't always want an autoclick, so I used my dpi shift (Mouse 9) instead of my left mouse button to have a controlled hold-to-click bind. Tested and worked in multiple games and click tests.
+
+Here's the function I used:
+
+    hold(
+    event(EV_KEY, BTN_LEFT, 1)
+    .wait(10)
+    .event(EV_KEY, BTN_LEFT, 0)
+    .wait(40)
+    )
+
+The "1" is indicating a click down and "0" indicates a click release, so tweaking the values of the wait times would affect how fast the autoclick is. Hope this helps someone.
+
+=====
+Another option is to make this a toggle by simply replacing "hold" with "toggle", then the macro will run continuously untill you press the button again to stop the macro.
